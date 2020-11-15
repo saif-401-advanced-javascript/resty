@@ -50,5 +50,13 @@
     left: 50px;
     justify-content: space-around;
     align-items: center;
+    p {
+      width: 50%;
+    }
   }
+}
+
+.choiceBtn {
+  background-color: blue;
+  color: #fff;
 }

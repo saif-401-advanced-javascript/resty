@@ -10,6 +10,12 @@ class Form extends React.Component {
 
   handleUrl = () => {
     const inputEle = document.querySelector('input[type="text"]');
+    const getBtn = document.querySelector('#first');
+    const selectedBtn = document.querySelector('button.choiceBtn');
+    if (selectedBtn) {
+      selectedBtn.classList.remove('choiceBtn');
+    }
+    getBtn.classList.add('choiceBtn');
     this.setState({
       method: 'GET',
       url: inputEle.value
@@ -18,6 +24,16 @@ class Form extends React.Component {
   handleMethod = (e) => {
     this.setState({
       method: e.target.innerText
+    });
+    const buttonsArray = document.querySelectorAll('button');
+    [...buttonsArray].forEach((item) => {
+      if (item.classList.contains('choiceBtn')) {
+        item.classList.remove('choiceBtn');
+      }
+
+      if (item.innerText === e.target.innerText) {
+        item.classList.add('choiceBtn');
+      }
     });
   };
 
@@ -30,7 +46,9 @@ class Form extends React.Component {
           <button onClick={this.handleUrl}>GO!</button>
         </div>
         <div id='user-choices'>
-          <button onClick={this.handleMethod}>GET</button>
+          <button id='first' onClick={this.handleMethod}>
+            GET
+          </button>
           <button onClick={this.handleMethod}>POST</button>
           <button onClick={this.handleMethod}>DELETE</button>
           <button onClick={this.handleMethod}>UPDATE</button>
