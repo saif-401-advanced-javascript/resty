@@ -1,30 +1,32 @@
 import React from 'react';
 import '../scss/form.scss';
 
-class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    // Rule : We can't directly change the state
-    this.state = { method: '', url: '' };
-  }
+function Form(props) {
+  const { handler } = props;
+  let headers = '';
 
-  handleUrl = () => {
-    const inputEle = document.querySelector('input[type="text"]');
-    const getBtn = document.querySelector('#first');
-    const selectedBtn = document.querySelector('button.choiceBtn');
-    if (selectedBtn) {
-      selectedBtn.classList.remove('choiceBtn');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const url = e.target.children[0].value;
+    if (url) {
+      fetch(url).then((row) => {
+        headers = row.headers.get('Content-Type');
+        row.json().then((data) => {
+          btnColor();
+          handler({
+            header: headers,
+            data: data
+          });
+        });
+      });
+    } else {
+      handler({
+        error: 'Please Enter a URL'
+      });
     }
-    getBtn.classList.add('choiceBtn');
-    this.setState({
-      method: 'GET',
-      url: inputEle.value
-    });
   };
-  handleMethod = (e) => {
-    this.setState({
-      method: e.target.innerText
-    });
+
+  const handleMethod = (e) => {
     const buttonsArray = document.querySelectorAll('button');
     [...buttonsArray].forEach((item) => {
       if (item.classList.contains('choiceBtn')) {
@@ -37,31 +39,31 @@ class Form extends React.Component {
     });
   };
 
-  render() {
-    return (
-      <>
-        <div className='form row'>
-          <p>URL:</p>
-          <input type='text'></input>
-          <button onClick={this.handleUrl}>GO!</button>
-        </div>
-        <div id='user-choices'>
-          <button id='first' onClick={this.handleMethod}>
-            GET
-          </button>
-          <button onClick={this.handleMethod}>POST</button>
-          <button onClick={this.handleMethod}>DELETE</button>
-          <button onClick={this.handleMethod}>UPDATE</button>
-        </div>
-        <div className='user-choice'>
-          <div className='choice row'>
-            <p id='url'>{this.state.method}</p>
-            <p id='method'>{this.state.url}</p>
-          </div>
-        </div>
-      </>
-    );
-  }
+  const btnColor = () => {
+    const getBtn = document.querySelector('#first');
+    const selectedBtn = document.querySelector('button.choiceBtn');
+    if (selectedBtn) {
+      selectedBtn.classList.remove('choiceBtn');
+    }
+    getBtn.classList.add('choiceBtn');
+  };
+
+  return (
+    <>
+      <form data-testid='form' className='row' onSubmit={handleSubmit}>
+        <input data-testid='input-text' type='text' />
+        <input type='submit' value='GO!' />
+      </form>
+      <div id='user-choices'>
+        <button id='first' onClick={handleMethod}>
+          GET
+        </button>
+        <button onClick={handleMethod}>POST</button>
+        <button onClick={handleMethod}>DELETE</button>
+        <button onClick={handleMethod}>UPDATE</button>
+      </div>
+    </>
+  );
 }
 
 export default Form;
