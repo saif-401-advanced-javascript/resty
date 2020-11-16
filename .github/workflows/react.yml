@@ -1,6 +1,5 @@
 name: Deploy React App
-on: 
-  push
+on: push
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,3 +18,4 @@ jobs:
           git remote set-url origin https://${{ secrets.PERSONAL_TOKEN }}@github.com/${{ github.repository }}.git
           npm install
           npm run deploy
+          npm run test
