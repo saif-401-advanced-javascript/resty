@@ -3,20 +3,27 @@ import '../scss/form.scss';
 
 function Form(props) {
   const { handler } = props;
+  let headers = '';
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const url = e.target.children[0].value;
-    fetch(url)
-      .then((row) => row.json())
-      .then((data) => {
-        handler(data);
+    if (url) {
+      fetch(url).then((row) => {
+        headers = row.headers.get('Content-Type');
+        row.json().then((data) => {
+          btnColor();
+          handler({
+            header: headers,
+            data: data
+          });
+        });
       });
-    const getBtn = document.querySelector('#first');
-    const selectedBtn = document.querySelector('button.choiceBtn');
-    if (selectedBtn) {
-      selectedBtn.classList.remove('choiceBtn');
+    } else {
+      handler({
+        error: 'Please Enter a URL'
+      });
     }
-    getBtn.classList.add('choiceBtn');
   };
 
   const handleMethod = (e) => {
@@ -30,6 +37,15 @@ function Form(props) {
         item.classList.add('choiceBtn');
       }
     });
+  };
+
+  const btnColor = () => {
+    const getBtn = document.querySelector('#first');
+    const selectedBtn = document.querySelector('button.choiceBtn');
+    if (selectedBtn) {
+      selectedBtn.classList.remove('choiceBtn');
+    }
+    getBtn.classList.add('choiceBtn');
   };
 
   return (
@@ -46,7 +62,6 @@ function Form(props) {
         <button onClick={handleMethod}>DELETE</button>
         <button onClick={handleMethod}>UPDATE</button>
       </div>
-      <div className='user-choice'></div>
     </>
   );
 }

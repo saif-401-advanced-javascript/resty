@@ -8,26 +8,32 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0,
-      result: [],
-      header: ''
+      result: '',
+      header: '',
+      error: ''
     };
   }
 
   updateState = (results) => {
-    this.setState({
-      count: results.count,
-      result: results.results
-    });
+    if (results.data || results.header) {
+      this.setState({
+        result: results.data,
+        header: results.header
+      });
+    } else {
+      this.setState({
+        error: results.error
+      });
+    }
   };
 
   render() {
-    const { count, result, header } = this.state;
+    const { result, header, error } = this.state;
     return (
       <>
         <Header />
         <Form handler={this.updateState} />
-        <RESULTS count={count} results={result} headers={header} />
+        <RESULTS header={header} result={result} error={error} />
         <Footer />
       </>
     );
