@@ -1,0 +1,12 @@
+footer {
+  width: 100%;
+  height: 50px;
+  color: #000000;
+  position: relative;
+  background-color: gray;
+  p {
+    position: absolute;
+    top: 15px;
+    left: 40px;
+  }
+}

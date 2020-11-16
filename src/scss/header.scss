@@ -1,0 +1,16 @@
+header {
+  width: 100%;
+  background-color: lighten(#000000, 20%);
+  top: 0;
+  height: 100px;
+  color: #fff;
+  margin: 0 auto;
+  position: relative;
+
+  h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
