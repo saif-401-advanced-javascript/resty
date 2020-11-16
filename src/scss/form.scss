@@ -2,21 +2,18 @@
   display: flex;
 }
 
-.form {
+form {
   height: 100px;
-  width: 25%;
-  justify-content: space-between;
+  width: 50%;
+  justify-content: space-around;
   align-items: center;
   margin: 0 auto;
 
   input {
     width: 50%;
-    padding: 0.5rem;
   }
-
-  button {
-    width: 20%;
-    padding: 0.1rem;
+  input[type='submit'] {
+    width: 25%;
   }
 }
 
