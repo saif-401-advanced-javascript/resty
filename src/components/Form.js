@@ -50,8 +50,8 @@ function Form(props) {
 
   return (
     <>
-      <form className='row' onSubmit={handleSubmit}>
-        <input type='text' />
+      <form data-testid='form' className='row' onSubmit={handleSubmit}>
+        <input data-testid='input-text' type='text' />
         <input type='submit' value='GO!' />
       </form>
       <div id='user-choices'>
