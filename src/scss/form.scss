@@ -19,7 +19,7 @@ form {
 
 #user-choices {
   display: flex;
-  width: 25%;
+  width: 50%;
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
@@ -31,13 +31,14 @@ form {
 }
 
 .user-choice {
-  width: 90%;
+  width: 100%;
   height: 350px;
   background-color: lighten(gray, 40%);
   margin: 20px auto;
   border: 2px solid black;
-  overflow: scroll;
+
   position: relative;
+  justify-content: space-between;
 
   .choice {
     width: 15%;
@@ -51,9 +52,32 @@ form {
       width: 50%;
     }
   }
+
+  .render {
+    width: 70%;
+    border-left: 10px solid black;
+    padding: 5px;
+    overflow: scroll;
+  }
+
+  #method {
+    width: 30%;
+    justify-content: space-around;
+    margin-top: 50px;
+  }
 }
 
 .choiceBtn {
   background-color: blue;
   color: #fff;
+}
+
+#CRUD {
+  text-align: center;
+  width: 100%;
+
+  textarea {
+    width: 50%;
+    padding: 10px;
+  }
 }

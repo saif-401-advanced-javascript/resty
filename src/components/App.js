@@ -3,6 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Form from './Form';
 import RESULTS from './Results';
+import History from './history';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class App extends React.Component {
     this.state = {
       result: '',
       header: '',
-      error: ''
+      error: '',
+      requests: []
     };
   }
 
@@ -27,13 +29,22 @@ class App extends React.Component {
     }
   };
 
+  handleReq = (data) => {
+    this.setState({
+      requests: data
+    });
+  };
+
   render() {
-    const { result, header, error } = this.state;
+    const { result, header, error, requests } = this.state;
     return (
       <>
         <Header />
-        <Form handler={this.updateState} />
-        <RESULTS header={header} result={result} error={error} />
+        <Form handler={this.updateState} handleReq={this.handleReq} />
+        <div className='user-choice row'>
+          <History req={requests} />
+          <RESULTS header={header} result={result} error={error} />
+        </div>
         <Footer />
       </>
     );

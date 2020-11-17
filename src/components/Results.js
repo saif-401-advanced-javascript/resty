@@ -1,11 +1,16 @@
 import React from 'react';
 import ReactJson from 'react-json-view';
+import List from './list';
 
-function Results({ header, result, error }) {
+function Results({ result, header, error, method, url }) {
   if (header) {
     return (
       <>
-        <div className='user-choice'>
+        {/* <div id='method' className='row'>
+            <p>{method}</p>
+            <p>{url}</p>
+          </div> */}
+        <div className='render'>
           <div>
             <h2 data-testid='header'>Headers</h2>
             <ReactJson src={{ Headers: header }} theme='monokai' />
@@ -19,12 +24,12 @@ function Results({ header, result, error }) {
     );
   } else if (error) {
     return (
-      <div className='user-choice'>
+      <div className='render'>
         <h2 data-testid='error'>{error}</h2>
       </div>
     );
   } else {
-    return <div className='user-choice'></div>;
+    return <div className='render'></div>;
   }
 }
 
