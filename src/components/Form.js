@@ -59,6 +59,10 @@ function Form(props) {
           });
           localStorage.setItem('requests', JSON.stringify(newArray));
         });
+        setTimeout(() => {
+          let test = JSON.parse(localStorage.getItem('requests'));
+          handleReq(test);
+        }, 5000);
       });
     } else {
       handler({
@@ -117,12 +121,15 @@ function Form(props) {
           });
           localStorage.setItem('requests', JSON.stringify(getArray));
         });
+        setTimeout(() => {
+          let test = JSON.parse(localStorage.getItem('requests'));
+          handleReq(test);
+        }, 5000);
       });
     }
     id++;
   };
   const handleDelete = (url) => {
-    const crud_choice = document.getElementById('crud_choice');
     if (url) {
       const arr = url.split('/');
       const id = arr[arr.length - 1];
@@ -147,6 +154,10 @@ function Form(props) {
           });
           localStorage.setItem('requests', JSON.stringify(getArray));
         });
+        setTimeout(() => {
+          let test = JSON.parse(localStorage.getItem('requests'));
+          handleReq(test);
+        }, 5000);
       });
     }
   };
@@ -181,6 +192,10 @@ function Form(props) {
           });
           localStorage.setItem('requests', JSON.stringify(getArray));
         });
+        setTimeout(() => {
+          let test = JSON.parse(localStorage.getItem('requests'));
+          handleReq(test);
+        }, 5000);
       });
     }
   };
