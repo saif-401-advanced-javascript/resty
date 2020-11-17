@@ -1,40 +1,63 @@
 import React from 'react';
 import '../scss/form.scss';
-
 function Form(props) {
   const { handler, handleReq } = props;
   let headers = '';
   let id = 1;
   let localStorageArr = [];
-  let getArray;
+  let getArray = [];
   localStorage.setItem('requests', JSON.stringify(localStorageArr));
-  const crud_choice = document.getElementById('crud_choice');
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const inputEle = document.querySelector('#url');
+  //   const url = inputEle.value;
+  //   if (url) {
+  //     fetch(url, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-type': 'application/json; charset=UTF-8'
+  //       }
+  //     })
+  //       .then((row) => row.json())
+  //       .then((data) => {
+  //         btnColor();
+  //         handler({
+  //           header: 'application/json; charset=UTF-8',
+  //           data: data
+  //         });
+  //         let newArray = JSON.parse(localStorage.getItem('requests'));
+  //         newArray.push({
+  //           url: url,
+  //           method: 'GET',
+  //           body: data
+  //         });
+  //         localStorage.setItem('requests', JSON.stringify(newArray));
+  //       });
+  //   }
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const url = e.target.children[0].value;
+    const inputEle = document.querySelector('#url');
+    const url = inputEle.value;
     if (url) {
       fetch(url).then((row) => {
         headers = row.headers.get('Content-Type');
         row.json().then((data) => {
           btnColor();
-          getArray = JSON.parse(localStorage.getItem('requests'));
-          console.log('trertert', getArray);
-          getArray.push({
-            url: url,
-            method: 'GET',
-            header: headers,
-            body: data
-          });
-          localStorage.setItem('requests', JSON.stringify(getArray));
-          getArray = JSON.parse(localStorage.getItem('requests'));
-          console.log('trertert', getArray);
           handler({
             header: headers,
             data: data
           });
-          handleReq({
-            req: JSON.parse(localStorage.getItem('requests'))
+          let newArray = JSON.parse(localStorage.getItem('requests'));
+          newArray.push({
+            url: url,
+            method: 'GET',
+            header: headers,
+            body: JSON.stringify(data)
           });
+          localStorage.setItem('requests', JSON.stringify(newArray));
         });
       });
     } else {
@@ -61,12 +84,15 @@ function Form(props) {
       handlePost(inputEle.value);
     } else if (btn === 'UPDATE') {
       handleUpdate(inputEle.value);
+    } else if (btn === 'GET') {
+      handleSubmit(e);
     } else {
       handleDelete(inputEle.value);
     }
   };
 
   const handlePost = (url) => {
+    const crud_choice = document.getElementById('crud_choice');
     if (url) {
       const [title, body] = crud_choice.value.split(',');
       fetch(url, {
@@ -96,6 +122,7 @@ function Form(props) {
     id++;
   };
   const handleDelete = (url) => {
+    const crud_choice = document.getElementById('crud_choice');
     if (url) {
       const arr = url.split('/');
       const id = arr[arr.length - 1];
@@ -125,6 +152,7 @@ function Form(props) {
   };
 
   const handleUpdate = (url) => {
+    const crud_choice = document.getElementById('crud_choice');
     if (url) {
       const arr = url.split('/');
       const id = arr[arr.length - 1];
