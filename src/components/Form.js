@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../scss/form.scss';
 function Form(props) {
-  const { handler, handleReq } = props;
+  const { handler, handleReq, isClicked } = props;
   let headers = '';
   let id = 1;
   let getArray = [];
@@ -35,6 +35,7 @@ function Form(props) {
   // };
 
   const handleSubmit = (e) => {
+    isClicked();
     e.preventDefault();
     const inputEle = document.querySelector('#url');
     const url = inputEle.value;
@@ -81,6 +82,7 @@ function Form(props) {
         item.classList.add('choiceBtn');
       }
     });
+    isClicked();
     if (btn === 'POST') {
       handlePost(inputEle.value);
     } else if (btn === 'UPDATE') {

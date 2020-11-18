@@ -4,6 +4,7 @@ import Footer from './Footer';
 import Form from './Form';
 import RESULTS from './Results';
 import History from './history';
+import { If, Then, Else } from './if';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class App extends React.Component {
       result: '',
       header: '',
       error: '',
-      requests: []
+      requests: [],
+      isClicked: false
     };
   }
 
@@ -37,21 +39,41 @@ class App extends React.Component {
   };
 
   handleReq = (data) => {
-    console.log('HHHHHHHHHHHHHHH', data);
     this.setState({
       requests: data
     });
   };
 
+  handleClicked = () => {
+    this.setState({
+      isClicked: !this.state.isClicked
+    });
+  };
+
   render() {
-    const { result, header, error, requests } = this.state;
+    const { result, header, error, requests, isClicked } = this.state;
     return (
       <>
         <Header />
-        <Form handler={this.updateState} handleReq={this.handleReq} />
+        <Form
+          handler={this.updateState}
+          handleReq={this.handleReq}
+          isClicked={this.handleClicked}
+        />
         <div className='user-choice row'>
           <History handler={this.updateState} req={requests} />
-          <RESULTS header={header} result={result} error={error} />
+          <If condition={result}>
+            <Then>
+              <RESULTS header={header} result={result} error={error} />
+            </Then>
+            <Else>
+              <If condition={isClicked}>
+                <Then>
+                  <h2>Loading</h2>
+                </Then>
+              </If>
+            </Else>
+          </If>
         </div>
         <Footer />
       </>
