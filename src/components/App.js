@@ -5,6 +5,9 @@ import Form from './Form';
 import RESULTS from './Results';
 import History from './history';
 import { If, Then, Else } from './if';
+import { Route, Router, Switch } from 'react-router-dom';
+import Help from './help';
+import HistoryPage from './history-page';
 
 class App extends React.Component {
   constructor(props) {
@@ -55,26 +58,32 @@ class App extends React.Component {
     return (
       <>
         <Header />
-        <Form
-          handler={this.updateState}
-          handleReq={this.handleReq}
-          isClicked={this.handleClicked}
-        />
-        <div className='user-choice row'>
-          <History handler={this.updateState} req={requests} />
-          <If condition={result}>
-            <Then>
-              <RESULTS header={header} result={result} error={error} />
-            </Then>
-            <Else>
-              <If condition={isClicked}>
+        <Switch>
+          <Route exact path='/'>
+            <Form
+              handler={this.updateState}
+              handleReq={this.handleReq}
+              isClicked={this.handleClicked}
+            />
+            <div className='user-choice row'>
+              <History handler={this.updateState} req={requests} />
+              <If condition={result}>
                 <Then>
-                  <h2>Loading</h2>
+                  <RESULTS header={header} result={result} error={error} />
                 </Then>
+                <Else>
+                  <If condition={isClicked}>
+                    <Then>
+                      <h2>Loading</h2>
+                    </Then>
+                  </If>
+                </Else>
               </If>
-            </Else>
-          </If>
-        </div>
+            </div>
+          </Route>
+          <Route path='/history' component={HistoryPage} />
+          <Route path='/help' component={Help} />
+        </Switch>
         <Footer />
       </>
     );
