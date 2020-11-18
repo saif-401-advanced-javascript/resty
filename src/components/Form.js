@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../scss/form.scss';
 function Form(props) {
   const { handler, handleReq, isClicked } = props;
