@@ -2,7 +2,7 @@
   "name": "resty",
   "version": "0.1.0",
   "private": true,
-  "main": "src/index.js",
+  "main": "build/index.js",
   "homepage":"/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.6",
