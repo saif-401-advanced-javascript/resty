@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Form from './Form';
@@ -16,7 +16,14 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    localStorage.clear();
+    let localStorageArr = [];
+    localStorage.setItem('requests', JSON.stringify(localStorageArr));
+  }
+
   updateState = (results) => {
+    console.log('inside App', results);
     if (results.data || results.header) {
       this.setState({
         result: results.data,
@@ -43,7 +50,7 @@ class App extends React.Component {
         <Header />
         <Form handler={this.updateState} handleReq={this.handleReq} />
         <div className='user-choice row'>
-          <History req={requests} />
+          <History handler={this.updateState} req={requests} />
           <RESULTS header={header} result={result} error={error} />
         </div>
         <Footer />

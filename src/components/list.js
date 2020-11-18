@@ -1,22 +1,22 @@
 import React from 'react';
 import ListItem from './list-item';
 
-function List({ data }) {
-  console.log(data.req);
-  if (data.req.length) {
-    console.log('here');
-    if (data.req.req.length > 0) {
-      console.log('here');
-      return (
-        <ul>
-          {data.req.req.map((req) => {
-            return <ListItem request={req} />;
-          })}
-        </ul>
-      );
-    } else {
-      return <></>;
-    }
+function List({ data, handler }) {
+  if (data.length) {
+    return (
+      <ul>
+        {data.map((req, index) => {
+          return (
+            <ListItem
+              key={index}
+              request={req}
+              index={index}
+              handler={handler}
+            />
+          );
+        })}
+      </ul>
+    );
   } else {
     return <div></div>;
   }

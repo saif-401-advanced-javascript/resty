@@ -1,10 +1,19 @@
 import React from 'react';
 
-export default function ListItem({ request }) {
-  console.log('inside the list item', request);
+export default function ListItem({ request, index, handler }) {
   return (
-    <li>
-      <span>{request.method}</span> <span>{request.url}</span>
+    <li id={index} onClick={getData}>
+      {request.method} {request.url}
     </li>
   );
+  function getData(e) {
+    if (e.target.id) {
+      let id = e.target.id;
+      let array = JSON.parse(localStorage.getItem('requests'));
+      handler({
+        data: array[id].body,
+        header: array[id].header
+      });
+    }
+  }
 }

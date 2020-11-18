@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import '../scss/form.scss';
 function Form(props) {
   const { handler, handleReq } = props;
   let headers = '';
   let id = 1;
-  let localStorageArr = [];
   let getArray = [];
-  localStorage.setItem('requests', JSON.stringify(localStorageArr));
-
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   const inputEle = document.querySelector('#url');
@@ -55,14 +52,14 @@ function Form(props) {
             url: url,
             method: 'GET',
             header: headers,
-            body: JSON.stringify(data)
+            body: data
           });
           localStorage.setItem('requests', JSON.stringify(newArray));
         });
         setTimeout(() => {
-          let test = JSON.parse(localStorage.getItem('requests'));
-          handleReq(test);
-        }, 5000);
+          let dataInLocal = JSON.parse(localStorage.getItem('requests'));
+          sendData(dataInLocal);
+        }, 2000);
       });
     } else {
       handler({
@@ -122,9 +119,9 @@ function Form(props) {
           localStorage.setItem('requests', JSON.stringify(getArray));
         });
         setTimeout(() => {
-          let test = JSON.parse(localStorage.getItem('requests'));
-          handleReq(test);
-        }, 5000);
+          let dataInLocal = JSON.parse(localStorage.getItem('requests'));
+          sendData(dataInLocal);
+        }, 2000);
       });
     }
     id++;
@@ -155,9 +152,9 @@ function Form(props) {
           localStorage.setItem('requests', JSON.stringify(getArray));
         });
         setTimeout(() => {
-          let test = JSON.parse(localStorage.getItem('requests'));
-          handleReq(test);
-        }, 5000);
+          let dataInLocal = JSON.parse(localStorage.getItem('requests'));
+          sendData(dataInLocal);
+        }, 2000);
       });
     }
   };
@@ -184,6 +181,7 @@ function Form(props) {
           getArray.push({
             url: url,
             method: 'PUT',
+            header: headers,
             body: {
               title: title,
               body: body,
@@ -193,11 +191,16 @@ function Form(props) {
           localStorage.setItem('requests', JSON.stringify(getArray));
         });
         setTimeout(() => {
-          let test = JSON.parse(localStorage.getItem('requests'));
-          handleReq(test);
-        }, 5000);
+          let dataInLocal = JSON.parse(localStorage.getItem('requests'));
+          sendData(dataInLocal);
+        }, 2000);
       });
     }
+  };
+
+  const sendData = (data) => {
+    // console.log('Inside the new function', data);
+    handleReq(data);
   };
 
   const btnColor = () => {
