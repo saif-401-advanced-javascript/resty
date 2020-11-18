@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Form from './Form';
 import RESULTS from './Results';
+import History from './history';
+import { If, Then, Else } from './if';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,11 +12,20 @@ class App extends React.Component {
     this.state = {
       result: '',
       header: '',
-      error: ''
+      error: '',
+      requests: [],
+      isClicked: false
     };
   }
 
+  componentDidMount() {
+    localStorage.clear();
+    let localStorageArr = [];
+    localStorage.setItem('requests', JSON.stringify(localStorageArr));
+  }
+
   updateState = (results) => {
+    console.log('inside App', results);
     if (results.data || results.header) {
       this.setState({
         result: results.data,
@@ -27,13 +38,43 @@ class App extends React.Component {
     }
   };
 
+  handleReq = (data) => {
+    this.setState({
+      requests: data
+    });
+  };
+
+  handleClicked = () => {
+    this.setState({
+      isClicked: !this.state.isClicked
+    });
+  };
+
   render() {
-    const { result, header, error } = this.state;
+    const { result, header, error, requests, isClicked } = this.state;
     return (
       <>
         <Header />
-        <Form handler={this.updateState} />
-        <RESULTS header={header} result={result} error={error} />
+        <Form
+          handler={this.updateState}
+          handleReq={this.handleReq}
+          isClicked={this.handleClicked}
+        />
+        <div className='user-choice row'>
+          <History handler={this.updateState} req={requests} />
+          <If condition={result}>
+            <Then>
+              <RESULTS header={header} result={result} error={error} />
+            </Then>
+            <Else>
+              <If condition={isClicked}>
+                <Then>
+                  <h2>Loading</h2>
+                </Then>
+              </If>
+            </Else>
+          </If>
+        </div>
         <Footer />
       </>
     );

@@ -7,3 +7,14 @@
 @import 'header';
 @import 'footer';
 @import 'form';
+
+li {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 15px;
+  border-bottom: 1px black solid;
+}
+
+li:hover {
+  cursor: pointer;
+}
