@@ -13,4 +13,27 @@ header {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  nav {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 15px;
+    position: absolute;
+    top: 50px;
+    ul {
+      display: flex;
+      flex-direction: row;
+      width: 25%;
+      justify-content: space-around;
+    }
+
+    li {
+      color: #fff;
+
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+  }
 }
